@@ -35,7 +35,7 @@ public abstract class KFragmentTab extends KFragmentBase {
 		mFragmentTabHost.getTabWidget().setBackgroundResource(tabConfig.getWidgetBackgroundResource());
 		return view;
 	}
-
+   
 	/**
 	 * eg:mTabHost.addTab(mTabHost.newTabSpec("simple").setIndicator(
 	 * getTabItemView(0)), IndexFragment.class, null);
