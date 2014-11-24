@@ -1,7 +1,6 @@
 package com.kubeiwu.baseclass.util;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 public class ViewUtility {
