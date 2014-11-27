@@ -30,56 +30,55 @@ public class Util {
 		String blueStr = Integer.toHexString(blue);
 		return ("#" + redStr + greenStr + blueStr).toUpperCase(Locale.US);
 	}
-	 /** Print an on-screen message to alert the user */
-    public static void toaster(Context context, int stringId) {
-        Toast.makeText(context, stringId, Toast.LENGTH_SHORT).show();
-    }
 
-    public static int convertPxToDp(int px) {
-        DisplayMetrics metrics = VLCApplication.getAppResources().getDisplayMetrics();
-        float logicalDensity = metrics.density;
-        int dp = Math.round(px / logicalDensity);
-        return dp;
-    }
+	/** Print an on-screen message to alert the user */
+	public static void toaster(Context context, int stringId) {
+		Toast.makeText(context, stringId, Toast.LENGTH_SHORT).show();
+	}
 
-    public static int convertDpToPx(int dp) {
-        return Math.round(
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                        VLCApplication.getAppResources().getDisplayMetrics())
-                );
-    }
+	public static int convertPxToDp(Context context, int px) {
+		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+		float logicalDensity = metrics.density;
+		int dp = Math.round(px / logicalDensity);
+		return dp;
+	}
 
-    public static String readAsset(String assetName, String defaultS) {
-        try {
-            InputStream is = VLCApplication.getAppResources().getAssets().open(assetName);
-            BufferedReader r = new BufferedReader(new InputStreamReader(is, "UTF8"));
-            StringBuilder sb = new StringBuilder();
-            String line = r.readLine();
-            if(line != null) {
-                sb.append(line);
-                line = r.readLine();
-                while(line != null) {
-                    sb.append('\n');
-                    sb.append(line);
-                    line = r.readLine();
-                }
-            }
-            return sb.toString();
-        } catch (IOException e) {
-            return defaultS;
-        }
-    }
+	public static int convertDpToPx(Context context, int dp) {
+		return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics()));
+	}
 
-    /**
-     * Get a resource id from an attribute id.
-     * @param context
-     * @param attrId
-     * @return the resource id
-     */
-    public static int getResourceFromAttribute(Context context, int attrId) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(new int[] {attrId});
-        int resId = a.getResourceId(0, 0);
-        a.recycle();
-        return resId;
-    }
+	public static String readAsset(Context context, String assetName, String defaultS) {
+		try {
+			InputStream is = context.getResources().getAssets().open(assetName);
+			BufferedReader r = new BufferedReader(new InputStreamReader(is, "UTF8"));
+			StringBuilder sb = new StringBuilder();
+			String line = r.readLine();
+			if (line != null) {
+				sb.append(line);
+				line = r.readLine();
+				while (line != null) {
+					sb.append('\n');
+					sb.append(line);
+					line = r.readLine();
+				}
+			}
+			return sb.toString();
+		} catch (IOException e) {
+			return defaultS;
+		}
+	}
+
+	/**
+	 * Get a resource id from an attribute id.
+	 * 
+	 * @param context
+	 * @param attrId
+	 * @return the resource id
+	 */
+	public static int getResourceFromAttribute(Context context, int attrId) {
+		TypedArray a = context.getTheme().obtainStyledAttributes(new int[] { attrId });
+		int resId = a.getResourceId(0, 0);
+		a.recycle();
+		return resId;
+	}
 }
