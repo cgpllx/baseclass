@@ -2,6 +2,8 @@ package com.kubeiwu.baseclass.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 
 public class ApkUtils {
@@ -10,10 +12,27 @@ public class ApkUtils {
 		intent.setAction("android.intent.action.VIEW");
 		intent.addCategory("android.intent.category.DEFAULT");
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		
+
 		// intent.setType("application/vnd.android.package-archive");
 		// intent.setData(Uri.fromFile(file));
 		intent.setDataAndType(uri, "application/vnd.android.package-archive");
 		context.startActivity(intent);
 	}
- }
+
+	/**
+	 * 获取版本号
+	 * 
+	 * @return 当前应用的版本号
+	 */
+	public String getVersion(Context context) {
+		try {
+			PackageManager manager = context.getPackageManager();
+			PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+			String version = info.versionName;
+			return version;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+}

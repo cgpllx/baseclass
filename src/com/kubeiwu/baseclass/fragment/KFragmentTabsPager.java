@@ -2,7 +2,6 @@ package com.kubeiwu.baseclass.fragment;
 
 import java.util.ArrayList;
 
-import android.R.color;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;

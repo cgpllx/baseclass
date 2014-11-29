@@ -11,7 +11,7 @@ abstract class KFragmentBase extends Fragment {
 
 	public TabConfig getTabConfig() {
 		return null;
-	};
+	}
 
 	public static class TabConfig {
 		interface TabGravity {
