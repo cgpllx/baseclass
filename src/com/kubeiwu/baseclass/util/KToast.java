@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Looper;
 import android.widget.Toast;
 
-public class MyToast {
+public class KToast {
 	public static void show(Context context, String text, int duration) {
 		if (Looper.myLooper() != Looper.getMainLooper()) {
 			Looper.prepare();
