@@ -14,7 +14,7 @@ abstract class KFragmentBase extends Fragment {
 	}
 
 	public static class TabConfig {
-		interface TabGravity {
+		public interface TabGravity {
 			int BOTTOM = 0, TOP = 1;
 		}
 

@@ -4,10 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.Locale;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -81,4 +86,49 @@ public class Util {
 		a.recycle();
 		return resId;
 	}
+
+	public static void showExitDialog(Context context) {
+		AlertDialog alertDialog = new AlertDialog.Builder(context).setTitle("提示").setMessage("确定要退出吗?").setPositiveButton("确定", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				android.os.Process.killProcess(android.os.Process.myPid());
+			}
+		}).setNegativeButton("取消", null).create();
+
+		alertDialog.show();
+	}
+
+	// 1、展开、收起状态栏 用途：可用于点击Notifacation之后收起状态栏
+	public static final void collapseStatusBar(Context ctx) {
+		Object sbservice = ctx.getSystemService("statusbar");
+		try {
+			Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
+			Method collapse;
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+				collapse = statusBarManager.getMethod("collapsePanels");
+			} else {
+				collapse = statusBarManager.getMethod("collapse");
+			}
+			collapse.invoke(sbservice);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static final void expandStatusBar(Context ctx) {
+		Object sbservice = ctx.getSystemService("statusbar");
+		try {
+			Class<?> statusBarManager = Class.forName("android.app.StatusBarManager");
+			Method expand;
+			if (Build.VERSION.SDK_INT >= 17) {
+				expand = statusBarManager.getMethod("expandNotificationsPanel");
+			} else {
+				expand = statusBarManager.getMethod("expand");
+			}
+			expand.invoke(sbservice);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

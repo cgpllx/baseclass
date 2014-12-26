@@ -41,7 +41,7 @@ public abstract class KFragmentTabsPager extends KFragmentBase {
 		if (tabcount == 0) {
 			throw new IllegalArgumentException("Please in the initTab method to add Tab Fragment");
 		}
-		mTabHost.getTabWidget().setBackgroundColor(Color.RED);
+		mTabHost.getTabWidget().setBackgroundResource(tabConfig.getWidgetBackgroundResource());
 		return mTabHost;
 	}
 
@@ -100,7 +100,7 @@ public abstract class KFragmentTabsPager extends KFragmentBase {
 		}
 
 		public TabsPagerAdapter(Fragment activity, TabHost tabHost, ViewPager pager) {
-			super(activity.getChildFragmentManager());// 在fragment中使用
+			super(activity.getFragmentManager());// 在fragment中使用
 			mContext = activity.getActivity();
 			mTabHost = tabHost;
 			mViewPager = pager;
