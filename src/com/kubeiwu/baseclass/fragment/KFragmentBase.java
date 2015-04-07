@@ -18,7 +18,17 @@ abstract class KFragmentBase extends Fragment {
 			int BOTTOM = 0, TOP = 1;
 		}
 
-		private int widgetBackgroundResource = android.R.color.white;
+		private int widgetBackgroundResource ;
+		private int widgetDividerDrawableResId;
+		public int getWidgetDividerDrawableResId() {
+			return widgetDividerDrawableResId;
+		}
+
+		public TabConfig setWidgetDividerDrawableResId(int widgetDividerDrawableResId) {
+			this.widgetDividerDrawableResId = widgetDividerDrawableResId;
+			return this;
+		}
+
 		private int tabGravity = TabGravity.BOTTOM;
 
 		public int getTabGravity() {

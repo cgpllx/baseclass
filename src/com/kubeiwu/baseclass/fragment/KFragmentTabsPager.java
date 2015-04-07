@@ -41,7 +41,12 @@ public abstract class KFragmentTabsPager extends KFragmentBase {
 		if (tabcount == 0) {
 			throw new IllegalArgumentException("Please in the initTab method to add Tab Fragment");
 		}
-		mTabHost.getTabWidget().setBackgroundResource(tabConfig.getWidgetBackgroundResource());
+		if (tabConfig.getWidgetBackgroundResource() != 0) {
+			mTabHost.getTabWidget().setBackgroundResource(tabConfig.getWidgetBackgroundResource());
+		}
+		if(tabConfig.getWidgetDividerDrawableResId() != 0){
+			mTabHost.getTabWidget().setDividerDrawable(tabConfig.getWidgetDividerDrawableResId());
+		}
 		return mTabHost;
 	}
 
@@ -54,8 +59,7 @@ public abstract class KFragmentTabsPager extends KFragmentBase {
 	}
 
 	/**
-	 * eg:mTabsAdapter.addTab(mTabHost.newTabSpec("TabSpec").setIndicator(
-	 * getTabItemView(0)), YourFragment.class, null);
+	 * eg:mTabsAdapter.addTab(mTabHost.newTabSpec("TabSpec").setIndicator( getTabItemView(0)), YourFragment.class, null);
 	 */
 	protected abstract void initTab(TabsPagerAdapter mTabsAdapter, TabHost mTabHost);
 
