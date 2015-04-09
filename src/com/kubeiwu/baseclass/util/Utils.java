@@ -17,7 +17,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.Toast;
 
-public class Util {
+public class Utils {
 	/**
 	 * RGB颜色 转 HEX颜色 *
 	 * 
