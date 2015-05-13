@@ -5,7 +5,12 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 
- 
+/**
+ * 获取文件的编码方式
+ * 
+ * @author Administrator
+ *
+ */
 public class DetectEncoding {
 
 	private final int GB2312 = 0;
@@ -68,11 +73,7 @@ public class DetectEncoding {
 	}
 
 	/**
-	 * Function : detectEncoding Aruguments: URL Returns : One of the encodings
-	 * from the Encoding enumeration (GB2312, HZ, BIG5, EUC_TW, ASCII, or OTHER)
-	 * Description: This function looks at the URL contents and assigns it a
-	 * probability score for each encoding type. The encoding type with the
-	 * highest probability is returned.
+	 * Function : detectEncoding Aruguments: URL Returns : One of the encodings from the Encoding enumeration (GB2312, HZ, BIG5, EUC_TW, ASCII, or OTHER) Description: This function looks at the URL contents and assigns it a probability score for each encoding type. The encoding type with the highest probability is returned.
 	 */
 	public String detectEncoding(URL url) {
 		byte[] rawtext = new byte[10000];
@@ -82,8 +83,7 @@ public class DetectEncoding {
 
 		try {
 			chinesestream = url.openStream();
-			while ((bytesread = chinesestream.read(rawtext, byteoffset,
-					rawtext.length - byteoffset)) > 0) {
+			while ((bytesread = chinesestream.read(rawtext, byteoffset, rawtext.length - byteoffset)) > 0) {
 				byteoffset += bytesread;
 			}
 			;
@@ -99,11 +99,7 @@ public class DetectEncoding {
 	}
 
 	/**
-	 * Function : detectEncoding Aruguments: File Returns : One of the encodings
-	 * from the Encoding enumeration (GB2312, HZ, BIG5, EUC_TW, ASCII, or OTHER)
-	 * Description: This function looks at the file and assigns it a probability
-	 * score for each encoding type. The encoding type with the highest
-	 * probability is returned.
+	 * Function : detectEncoding Aruguments: File Returns : One of the encodings from the Encoding enumeration (GB2312, HZ, BIG5, EUC_TW, ASCII, or OTHER) Description: This function looks at the file and assigns it a probability score for each encoding type. The encoding type with the highest probability is returned.
 	 */
 	public String detectEncoding(File testfile) {
 		FileInputStream chinesefile;
@@ -123,16 +119,11 @@ public class DetectEncoding {
 	}
 
 	/**
-	 * Function : detectEncoding Aruguments: byte array Returns : One of the
-	 * encodings from the Encoding enumeration (GB2312, HZ, BIG5, EUC_TW, ASCII,
-	 * or OTHER) Description: This function looks at the byte array and assigns
-	 * it a probability score for each encoding type. The encoding type with the
-	 * highest probability is returned.
+	 * Function : detectEncoding Aruguments: byte array Returns : One of the encodings from the Encoding enumeration (GB2312, HZ, BIG5, EUC_TW, ASCII, or OTHER) Description: This function looks at the byte array and assigns it a probability score for each encoding type. The encoding type with the highest probability is returned.
 	 */
 	private int detectEncoding(byte[] rawtext) {
 		/*
-		 * KplayerLog.e("detect_encoding", "detecEncoding()" + "  rawtext is " +
-		 * rawtext);
+		 * KplayerLog.e("detect_encoding", "detecEncoding()" + "  rawtext is " + rawtext);
 		 */
 		int[] scores;
 		int index, maxscore = 0;
@@ -174,9 +165,7 @@ public class DetectEncoding {
 	}
 
 	/*
-	 * Function: gb2312_probability Argument: pointer to byte array Returns :
-	 * number from 0 to 100 representing probability text in array uses GB-2312
-	 * encoding
+	 * Function: gb2312_probability Argument: pointer to byte array Returns : number from 0 to 100 representing probability text in array uses GB-2312 encoding
 	 */
 	int gb2312_probability(byte[] rawtext) {
 		// KplayerLog.i("detect_encoding", "gb2312_probability");
@@ -196,9 +185,7 @@ public class DetectEncoding {
 				// asciichars++;
 			} else {
 				dbchars++;
-				if ((byte) 0xA1 <= rawtext[i] && rawtext[i] <= (byte) 0xF7
-						&& (byte) 0xA1 <= rawtext[i + 1]
-						&& rawtext[i + 1] <= (byte) 0xFE) {
+				if ((byte) 0xA1 <= rawtext[i] && rawtext[i] <= (byte) 0xF7 && (byte) 0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0xFE) {
 					gbchars++;
 					totalfreq += 500;
 					row = rawtext[i] + 256 - 0xA1;
@@ -224,9 +211,7 @@ public class DetectEncoding {
 	}
 
 	/*
-	 * Function: gb2312_probability Argument: pointer to byte array Returns :
-	 * number from 0 to 100 representing probability text in array uses GB-2312
-	 * encoding
+	 * Function: gb2312_probability Argument: pointer to byte array Returns : number from 0 to 100 representing probability text in array uses GB-2312 encoding
 	 */
 	int gbk_probability(byte[] rawtext) {
 		int i, rawtextlen = 0;
@@ -244,10 +229,8 @@ public class DetectEncoding {
 				// asciichars++;
 			} else {
 				dbchars++;
-				if ((byte) 0xA1 <= rawtext[i] && rawtext[i] <= (byte) 0xF7
-						&& // Original GB range
-						(byte) 0xA1 <= rawtext[i + 1]
-						&& rawtext[i + 1] <= (byte) 0xFE) {
+				if ((byte) 0xA1 <= rawtext[i] && rawtext[i] <= (byte) 0xF7 && // Original GB range
+						(byte) 0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0xFE) {
 					gbchars++;
 					totalfreq += 500;
 					row = rawtext[i] + 256 - 0xA1;
@@ -261,8 +244,7 @@ public class DetectEncoding {
 						gbfreq += 200;
 					}
 
-				} else if ((byte) 0x81 <= rawtext[i]
-						&& rawtext[i] <= (byte) 0xFE && // Extended GB range
+				} else if ((byte) 0x81 <= rawtext[i] && rawtext[i] <= (byte) 0xFE && // Extended GB range
 						(((byte) 0x80 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0xFE) || ((byte) 0x40 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0x7E))) {
 					gbchars++;
 					totalfreq += 500;
@@ -290,8 +272,7 @@ public class DetectEncoding {
 	}
 
 	/*
-	 * Function: hz_probability Argument: byte array Returns : number from 0 to
-	 * 100 representing probability text in array uses HZ encoding
+	 * Function: hz_probability Argument: byte array Returns : number from 0 to 100 representing probability text in array uses HZ encoding
 	 */
 	int hz_probability(byte[] rawtext) {
 		int i, rawtextlen;
@@ -316,8 +297,7 @@ public class DetectEncoding {
 							// hzend++;
 							i++;
 							break;
-						} else if ((0x21 <= rawtext[i] && rawtext[i] <= 0x77)
-								&& (0x21 <= rawtext[i + 1] && rawtext[i + 1] <= 0x77)) {
+						} else if ((0x21 <= rawtext[i] && rawtext[i] <= 0x77) && (0x21 <= rawtext[i + 1] && rawtext[i + 1] <= 0x77)) {
 							// hzchars += 2;
 							row = rawtext[i] - 0x21;
 							column = rawtext[i + 1] - 0x21;
@@ -327,8 +307,7 @@ public class DetectEncoding {
 							} else if (15 <= row && row < 55) {
 								hzfreq += 200;
 							}
-						} else if ((0xA1 <= rawtext[i] && rawtext[i] <= 0xF7)
-								&& (0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= 0xF7)) {
+						} else if ((0xA1 <= rawtext[i] && rawtext[i] <= 0xF7) && (0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= 0xF7)) {
 							// hzchars += 2;
 							row = rawtext[i] + 256 - 0xA1;
 							column = rawtext[i + 1] + 256 - 0xA1;
@@ -367,8 +346,7 @@ public class DetectEncoding {
 	}
 
 	/**
-	 * Function: big5_probability Argument: byte array Returns : number from 0
-	 * to 100 representing probability text in array uses Big5 encoding
+	 * Function: big5_probability Argument: byte array Returns : number from 0 to 100 representing probability text in array uses Big5 encoding
 	 */
 	int big5_probability(byte[] rawtext) {
 		// int score = 0;
@@ -385,9 +363,7 @@ public class DetectEncoding {
 				// asciichars++;
 			} else {
 				dbchars++;
-				if ((byte) 0xA1 <= rawtext[i]
-						&& rawtext[i] <= (byte) 0xF9
-						&& (((byte) 0x40 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0x7E) || ((byte) 0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0xFE))) {
+				if ((byte) 0xA1 <= rawtext[i] && rawtext[i] <= (byte) 0xF9 && (((byte) 0x40 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0x7E) || ((byte) 0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0xFE))) {
 					bfchars++;
 					totalfreq += 500;
 					row = rawtext[i] + 256 - 0xA1;
@@ -412,9 +388,7 @@ public class DetectEncoding {
 	}
 
 	/*
-	 * Function: euc_tw_probability Argument: byte array Returns : number from 0
-	 * to 100 representing probability text in array uses EUC-TW (CNS 11643)
-	 * encoding
+	 * Function: euc_tw_probability Argument: byte array Returns : number from 0 to 100 representing probability text in array uses EUC-TW (CNS 11643) encoding
 	 */
 	int euc_tw_probability(byte[] rawtext) {
 		int i, rawtextlen = 0;
@@ -431,23 +405,14 @@ public class DetectEncoding {
 				// asciichars++;
 			} else { // high bit set
 				dbchars++;
-				if (i + 3 < rawtextlen && (byte) 0x8E == rawtext[i]
-						&& (byte) 0xA1 <= rawtext[i + 1]
-						&& rawtext[i + 1] <= (byte) 0xB0
-						&& (byte) 0xA1 <= rawtext[i + 2]
-						&& rawtext[i + 2] <= (byte) 0xFE
-						&& (byte) 0xA1 <= rawtext[i + 3]
-						&& rawtext[i + 3] <= (byte) 0xFE) { // Planes 1 - 16
+				if (i + 3 < rawtextlen && (byte) 0x8E == rawtext[i] && (byte) 0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0xB0 && (byte) 0xA1 <= rawtext[i + 2] && rawtext[i + 2] <= (byte) 0xFE && (byte) 0xA1 <= rawtext[i + 3] && rawtext[i + 3] <= (byte) 0xFE) { // Planes 1 - 16
 
 					cnschars++;
 					// System.out.println("plane 2 or above CNS char");
 					// These are all less frequent chars so just ignore freq
 					i += 3;
-				} else if ((byte) 0xA1 <= rawtext[i]
-						&& rawtext[i] <= (byte) 0xFE
-						&& // Plane 1
-						(byte) 0xA1 <= rawtext[i + 1]
-						&& rawtext[i + 1] <= (byte) 0xFE) {
+				} else if ((byte) 0xA1 <= rawtext[i] && rawtext[i] <= (byte) 0xFE && // Plane 1
+						(byte) 0xA1 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0xFE) {
 					cnschars++;
 					totalfreq += 500;
 					row = rawtext[i] + 256 - 0xA1;
@@ -469,9 +434,7 @@ public class DetectEncoding {
 	}
 
 	/*
-	 * Function: iso_2022_cn_probability Argument: byte array Returns : number
-	 * from 0 to 100 representing probability text in array uses ISO 2022-CN
-	 * encoding WORKS FOR BASIC CASES, BUT STILL NEEDS MORE WORK
+	 * Function: iso_2022_cn_probability Argument: byte array Returns : number from 0 to 100 representing probability text in array uses ISO 2022-CN encoding WORKS FOR BASIC CASES, BUT STILL NEEDS MORE WORK
 	 */
 	int iso_2022_cn_probability(byte[] rawtext) {
 		int i, rawtextlen = 0;
@@ -487,13 +450,11 @@ public class DetectEncoding {
 		for (i = 0; i < rawtextlen - 1; i++) {
 			if (rawtext[i] == (byte) 0x1B && i + 3 < rawtextlen) { // Escape
 																	// char ESC
-				if (rawtext[i + 1] == (byte) 0x24 && rawtext[i + 2] == 0x29
-						&& rawtext[i + 3] == (byte) 0x41) { // GB Escape $ ) A
+				if (rawtext[i + 1] == (byte) 0x24 && rawtext[i + 2] == 0x29 && rawtext[i + 3] == (byte) 0x41) { // GB Escape $ ) A
 					i += 4;
 					while (rawtext[i] != (byte) 0x1B) {
 						dbchars++;
-						if ((0x21 <= rawtext[i] && rawtext[i] <= 0x77)
-								&& (0x21 <= rawtext[i + 1] && rawtext[i + 1] <= 0x77)) {
+						if ((0x21 <= rawtext[i] && rawtext[i] <= 0x77) && (0x21 <= rawtext[i + 1] && rawtext[i + 1] <= 0x77)) {
 							isochars++;
 							row = rawtext[i] - 0x21;
 							column = rawtext[i + 1] - 0x21;
@@ -507,17 +468,12 @@ public class DetectEncoding {
 						}
 						i++;
 					}
-				} else if (i + 3 < rawtextlen && rawtext[i + 1] == (byte) 0x24
-						&& rawtext[i + 2] == (byte) 0x29
-						&& rawtext[i + 3] == (byte) 0x47) {
+				} else if (i + 3 < rawtextlen && rawtext[i + 1] == (byte) 0x24 && rawtext[i + 2] == (byte) 0x29 && rawtext[i + 3] == (byte) 0x47) {
 					// CNS Escape $ ) G
 					i += 4;
 					while (rawtext[i] != (byte) 0x1B) {
 						dbchars++;
-						if ((byte) 0x21 <= rawtext[i]
-								&& rawtext[i] <= (byte) 0x7E
-								&& (byte) 0x21 <= rawtext[i + 1]
-								&& rawtext[i + 1] <= (byte) 0x7E) {
+						if ((byte) 0x21 <= rawtext[i] && rawtext[i] <= (byte) 0x7E && (byte) 0x21 <= rawtext[i + 1] && rawtext[i + 1] <= (byte) 0x7E) {
 							isochars++;
 							totalfreq += 500;
 							row = rawtext[i] - 0x21;
@@ -532,9 +488,7 @@ public class DetectEncoding {
 						i++;
 					}
 				}
-				if (rawtext[i] == (byte) 0x1B && i + 2 < rawtextlen
-						&& rawtext[i + 1] == (byte) 0x28
-						&& rawtext[i + 2] == (byte) 0x42) { // ASCII: ESC ( B
+				if (rawtext[i] == (byte) 0x1B && i + 2 < rawtextlen && rawtext[i + 1] == (byte) 0x28 && rawtext[i + 2] == (byte) 0x42) { // ASCII: ESC ( B
 					i += 2;
 				}
 			}
@@ -550,9 +504,7 @@ public class DetectEncoding {
 	}
 
 	/*
-	 * Function: utf8_probability Argument: byte array Returns : number from 0
-	 * to 100 representing probability text in array uses UTF-8 encoding of
-	 * Unicode
+	 * Function: utf8_probability Argument: byte array Returns : number from 0 to 100 representing probability text in array uses UTF-8 encoding of Unicode
 	 */
 	int utf8_probability(byte[] rawtext) {
 		int score = 0;
@@ -567,18 +519,12 @@ public class DetectEncoding {
 			if ((rawtext[i] & (byte) 0x7F) == rawtext[i]) { // One byte
 				asciibytes++;
 				// Ignore ASCII, can throw off count
-			} else if (-64 <= rawtext[i] && rawtext[i] <= -33
-					&& // Two bytes
-					i + 1 < rawtextlen && -128 <= rawtext[i + 1]
-					&& rawtext[i + 1] <= -65) {
+			} else if (-64 <= rawtext[i] && rawtext[i] <= -33 && // Two bytes
+					i + 1 < rawtextlen && -128 <= rawtext[i + 1] && rawtext[i + 1] <= -65) {
 				goodbytes += 2;
 				i++;
-			} else if (-32 <= rawtext[i]
-					&& rawtext[i] <= -17
-					&& // Three bytes
-					i + 2 < rawtextlen && -128 <= rawtext[i + 1]
-					&& rawtext[i + 1] <= -65 && -128 <= rawtext[i + 2]
-					&& rawtext[i + 2] <= -65) {
+			} else if (-32 <= rawtext[i] && rawtext[i] <= -17 && // Three bytes
+					i + 2 < rawtextlen && -128 <= rawtext[i + 1] && rawtext[i + 1] <= -65 && -128 <= rawtext[i + 2] && rawtext[i + 2] <= -65) {
 				goodbytes += 3;
 				i += 2;
 			}
@@ -603,9 +549,7 @@ public class DetectEncoding {
 	}
 
 	/*
-	 * Function: utf16_probability Argument: byte array Returns : number from 0
-	 * to 100 representing probability text in array uses UTF-16 encoding of
-	 * Unicode, guess based on BOM // NOT VERY GENERAL, NEEDS MUCH MORE WORK
+	 * Function: utf16_probability Argument: byte array Returns : number from 0 to 100 representing probability text in array uses UTF-16 encoding of Unicode, guess based on BOM // NOT VERY GENERAL, NEEDS MUCH MORE WORK
 	 */
 	int utf16_probability(byte[] rawtext) {
 		// int score = 0;
@@ -620,33 +564,19 @@ public class DetectEncoding {
 		return 0;
 
 		/*
-		 * // Check to see if characters fit into acceptable ranges rawtextlen =
-		 * rawtext.length; for (i = 0; i < rawtextlen; i++) { if ((rawtext[i] &
-		 * (byte)0x7F) == rawtext[i]) { // One byte goodbytes += 1;
-		 * asciibytes++; } else if ((rawtext[i] & (byte)0xDF) == rawtext[i]) {
-		 * // Two bytes if (i+1 < rawtextlen && (rawtext[i+1] & (byte)0xBF) ==
-		 * rawtext[i+1]) { goodbytes += 2; i++; } } else if ((rawtext[i] &
-		 * (byte)0xEF) == rawtext[i]) { // Three bytes if (i+2 < rawtextlen &&
-		 * (rawtext[i+1] & (byte)0xBF) == rawtext[i+1] && (rawtext[i+2] &
-		 * (byte)0xBF) == rawtext[i+2]) { goodbytes += 3; i+=2; } } }
+		 * // Check to see if characters fit into acceptable ranges rawtextlen = rawtext.length; for (i = 0; i < rawtextlen; i++) { if ((rawtext[i] & (byte)0x7F) == rawtext[i]) { // One byte goodbytes += 1; asciibytes++; } else if ((rawtext[i] & (byte)0xDF) == rawtext[i]) { // Two bytes if (i+1 < rawtextlen && (rawtext[i+1] & (byte)0xBF) == rawtext[i+1]) { goodbytes += 2; i++; } } else if ((rawtext[i] & (byte)0xEF) == rawtext[i]) { // Three bytes if (i+2 < rawtextlen && (rawtext[i+1] & (byte)0xBF) == rawtext[i+1] && (rawtext[i+2] & (byte)0xBF) == rawtext[i+2]) { goodbytes += 3; i+=2; } } }
 		 * 
 		 * score = (int)(100 * ((float)goodbytes/(float)rawtext.length));
 		 * 
-		 * // An all ASCII file is also a good UTF8 file, but I'd rather it //
-		 * get identified as ASCII. Can delete following 3 lines otherwise if
-		 * (goodbytes == asciibytes) { score = 0; }
+		 * // An all ASCII file is also a good UTF8 file, but I'd rather it // get identified as ASCII. Can delete following 3 lines otherwise if (goodbytes == asciibytes) { score = 0; }
 		 * 
-		 * // If not above 90, reduce to zero to prevent coincidental matches if
-		 * (score > 90) { return score; } else { return 0; }
+		 * // If not above 90, reduce to zero to prevent coincidental matches if (score > 90) { return score; } else { return 0; }
 		 */
 
 	}
 
 	/*
-	 * Function: ascii_probability Argument: byte array Returns : number from 0
-	 * to 100 representing probability text in array uses all ASCII Description:
-	 * Sees if array has any characters not in ASCII range, if so, score is
-	 * reduced
+	 * Function: ascii_probability Argument: byte array Returns : number from 0 to 100 representing probability text in array uses all ASCII Description: Sees if array has any characters not in ASCII range, if so, score is reduced
 	 */
 	int ascii_probability(byte[] rawtext) {
 		int score = 70;
@@ -2197,10 +2127,11 @@ public class DetectEncoding {
 		GBKFreq[80][144] = 300;
 		GBKFreq[85][113] = 299;
 	}
+
 	public static void main(String[] args) {
-		DetectEncoding de=new DetectEncoding();
-		File f=new File("D:\\textdemo\\Unicode.txt");
-		String decodeMode =  de.detectEncoding(f);
+		DetectEncoding de = new DetectEncoding();
+		File f = new File("D:\\textdemo\\Unicode.txt");
+		String decodeMode = de.detectEncoding(f);
 		System.out.println(decodeMode);
 	}
 
