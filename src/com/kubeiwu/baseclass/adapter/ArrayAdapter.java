@@ -93,11 +93,4 @@ public abstract class ArrayAdapter<T> extends BaseAdapter {
 		mItems.removeAll(items);
 		notifyDataSetChanged();
 	}
-	
-	/**
-	 * refresh
-	 * */
-	public void refresh() {
-		this.notifyDataSetChanged();
-	}
 }
