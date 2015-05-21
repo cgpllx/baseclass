@@ -52,13 +52,13 @@ public class ViewFactory {
 
 		tabhost.addView(mLinearLayout);
 		switch (gravity) {
-		case Gravity.BOTTOM:
+		case TabGravity.BOTTOM:
 			mLinearLayout.addView(realtabcontent);
 
 			mLinearLayout.addView(tabs);// wiget在下面
 			mLinearLayout.addView(tabcontent);
 			break;
-		case Gravity.TOP:
+		case TabGravity.TOP:
 			mLinearLayout.addView(tabs);// wiget在上面
 			mLinearLayout.addView(tabcontent);
 
