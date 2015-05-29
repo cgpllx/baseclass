@@ -60,7 +60,7 @@ public abstract class ArrayAdapter<T> extends BaseAdapter {
 	}
 
 	public void clear() {
-		if(mItems != null) {
+		if (mItems != null) {
 			mItems.clear();
 			notifyDataSetChanged();
 		}
@@ -71,11 +71,12 @@ public abstract class ArrayAdapter<T> extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	public void setmItems(List<T> mItems) {
-		if(mItems==null || mItems.size()==0) {
+	public void setmItems(List<T> items) {
+		if (items == null || items.size() == 0) {
 			return;
 		}
-		this.mItems = mItems;
+		this.mItems.clear();
+		this.mItems.addAll(items);
 		notifyDataSetChanged();
 	}
 
@@ -91,6 +92,11 @@ public abstract class ArrayAdapter<T> extends BaseAdapter {
 
 	public void removeAll(Collection<T> items) {
 		mItems.removeAll(items);
+		notifyDataSetChanged();
+	}
+
+	public void removeAll() {
+		mItems.removeAll(mItems);
 		notifyDataSetChanged();
 	}
 }

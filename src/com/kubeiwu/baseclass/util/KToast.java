@@ -61,7 +61,7 @@ public class KToast {
 	 */
 	public static void showShort(Context context, CharSequence message) {
 		if (isShow)
-			show(context, message, Toast.LENGTH_LONG);
+			show(context, message, Toast.LENGTH_SHORT);
 	}
 
 	public static void showShort(Context context, int message) {
