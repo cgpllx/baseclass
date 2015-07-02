@@ -45,10 +45,18 @@ public abstract class BaseLoader<T> extends AsyncTaskLoader<T> {
 	@Override
 	protected void onStartLoading() {
 		super.onStartLoading();
+		System.out.println("onStartLoading-------");
 		if (mListData != null) {
 			deliverResult(mListData);
 		}
-		forceLoad();
+		if (takeContentChanged() || mListData == null) {//防止重复调用onloaderfinish
+			forceLoad();
+		}
+	}
+
+	@Override
+	public void onCanceled(T data) {
+		super.onCanceled(data);
 	}
 
 	@Override
