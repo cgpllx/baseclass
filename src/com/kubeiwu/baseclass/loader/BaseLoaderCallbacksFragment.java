@@ -14,29 +14,35 @@ public abstract class BaseLoaderCallbacksFragment<T> extends Fragment implements
 
 	@Override
 	public void onLoadFinished(Loader<T> arg0, T arg1) {
-//		ChannelChildFragment
+		// ChannelChildFragment
 	}
 
 	@Override
 	public void onLoaderReset(Loader<T> arg0) {
 
 	}
-	protected boolean isVisible;  
+
+	protected boolean isVisible;
 
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
 		super.setUserVisibleHint(isVisibleToUser);
 		if (isVisibleToUser) {
-			isVisible=true;
+			isVisible = true;
 			onVisible();
-		}else{
-			isVisible=false;
+		} else {
+			isVisible = false;
 		}
 	}
 
 	protected void onVisible() {
-		lazyLoad();
+		if (!loaded) {
+			loaded = true;
+			lazyLoad();
+		}
 	}
+
+	private boolean loaded = false;
 
 	protected void lazyLoad() {
 	};
