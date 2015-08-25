@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Looper;
 import android.widget.Toast;
 
-public class KToast {
+public class KToast  {
 
 	private static boolean isShow = true;
 	static Toast toast;

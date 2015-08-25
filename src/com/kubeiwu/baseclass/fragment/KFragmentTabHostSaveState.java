@@ -196,6 +196,7 @@ public class KFragmentTabHostSaveState extends TabHost implements TabHost.OnTabC
 				FragmentTransaction ft = mFragmentManager.beginTransaction();
 				// ft.detach(info.fragment);
 				ft.hide(info.fragment);
+				info.fragment.setUserVisibleHint(false);// TODO 手动调用隐藏
 				ft.commit();
 			}
 		}
@@ -230,6 +231,7 @@ public class KFragmentTabHostSaveState extends TabHost implements TabHost.OnTabC
 					}
 					// ft.detach(tab.fragment);
 					ft.hide(tab.fragment);
+					tab.fragment.setUserVisibleHint(false);// TODO 手动调用隐藏
 				}
 			}
 		}
@@ -297,6 +299,7 @@ public class KFragmentTabHostSaveState extends TabHost implements TabHost.OnTabC
 				if (mLastTab.fragment != null) {
 					// ft.detach(mLastTab.fragment);
 					ft.hide(mLastTab.fragment);
+					mLastTab.fragment.setUserVisibleHint(false);// TODO 手动调用显示
 				}
 			}
 			if (newTab != null) {
@@ -306,6 +309,7 @@ public class KFragmentTabHostSaveState extends TabHost implements TabHost.OnTabC
 				} else {
 					// ft.attach(newTab.fragment);
 					ft.show(newTab.fragment);
+					newTab.fragment.setUserVisibleHint(true);// TODO 手动调用显示
 				}
 			}
 

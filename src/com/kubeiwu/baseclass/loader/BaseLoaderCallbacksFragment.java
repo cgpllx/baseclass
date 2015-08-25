@@ -6,6 +6,11 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 
 public abstract class BaseLoaderCallbacksFragment<T> extends Fragment implements LoaderCallbacks<T> {
+	protected final int loaderId = this.hashCode();
+
+	public int getLoaderId() {
+		return loaderId;
+	}
 
 	@Override
 	public Loader<T> onCreateLoader(int arg0, Bundle arg1) {
